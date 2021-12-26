@@ -3,7 +3,7 @@ import { useState } from "react"
 const App = () =>{
     //para poder manejar varios inputs de manera simultanea sin necesidad de duplicar el useState paso un objeto al valor inicial con
     //los distintos nombres de los inputs para que asi en el handleChange dependiendo del nombre que lo invoco guarda uno y otro
-    const[ value, setValue ] = useState({normal: '' , texto: '',select:'', check: false  }) // para darle valores iniciales los paso aca 
+    const[ value, setValue ] = useState({normal: '' , texto: '',select:'', check: false , estado :"felipe" }) // para darle valores iniciales los paso aca 
     const handleChange = (e) =>{
 
         // con e.target.name puedo revisar el nombre del input que llama a la funcion 
@@ -44,6 +44,16 @@ const App = () =>{
                 checked={value.check}
             
             />
+            {/* para obtener el valor del onchange desde la etiqueta padre le coloco el onChange al contenedor de los radio button
+                pero en este caso no puedo ver el checked  */}
+            {/* <div onChange={handleChange}> */}
+            <div >
+                <label>Chancho</label>
+                {/* Otra forma es mediande el onchange dentro de cada opcion y evaluando el cheked segun el name de la opcion seleccioanda   */}
+                <input onChange={handleChange} type='radio' value="feliz" name ="estado" checked={value.estado === "feliz"} /> Feliz
+                <input onChange={handleChange}type='radio' value="triste" name ="estado"  checked={value.estado === "triste"} /> Triste
+                <input onChange={handleChange} type='radio' value="felipe" name ="estado"  checked={value.estado === "felipe"} /> Felipe
+            </div>
         </div>
 
     )
