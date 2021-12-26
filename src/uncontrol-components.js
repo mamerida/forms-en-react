@@ -1,3 +1,8 @@
+//desventaja de los formularios no controlados, no se pueden validar hasta le submit
+//No se encuentran sincronizados con la interfaz.
+//los control component si se encuetran sincronizados y validan en tiempo real 
+// un control component se migran muy facilmente 
+
 
 
 function App() {
