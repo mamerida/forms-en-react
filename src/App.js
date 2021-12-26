@@ -1,36 +1,33 @@
-import { useRef } from "react"
-
-const App = () =>{
-    //para poder capturar los valores de los elementos uso useRef una por campo
-    const input = useRef()
-    const file = useRef()
-
-    //creo la funcion submit en el onclick para simular un form sin la etiqueta correspondiente 
-
-    const submit = () =>{
-        // con la sintaxis de files puedo acceder a los datos del archivo subido 
-        console.log(file.current.files[0])
-        // en este caso tomo los valores de mis inputs tanto archivos como campo y creo un form para poder trabajarlo con new FormData()
-        const form= new FormData()
-        form.append('archivo',file.current.files[0])
-        form.append('campo',input.current.value)
-        //mediante api fetch lo envio a cualquier lado
-        // /lala es una enpoint seria parecio a enviar esto a un servidor 
-        fetch('/lala' ,{method:'POST', body:form})
+function App() {
+    //el evento e recibe los valores al presionar submit y evito que recargue la pagina
+    //para yo poder acceder a los valores de los formularios dentor del evento lo paso como argumento dentro de 
+    // new FormData
+    //para poder trabajar con el objeto de manera mas sencilla lo transformo en un array con Array.from(new FormData(e.target))
+    //esto me entrega un arreglo de arreglos donde el primer elemento es el nombre del campo y el tercero el valor
+  
+    const submit = (e) =>{
+      e.preventDefault()
+      const data = Array.from(new FormData(e.target))
+      console.log(Object.fromEntries(data)) // esto lo que hace es toma el array 
+                                            // lo transforma en objeto y llama al campo como el nombre del input y al valor como su valor dentro del objeto
+  
     }
-
-
-
-    return(
+  
+    return (
+      //para evitar que la pagina renderize con los campos del formulario y poder atrapar el evento submit uso onSubmit
+      <form onSubmit={submit} >
         <div>
-            <div>
-                <span>LALA</span><br/>
-                <input type="text" name="campo" ref={input}/><br/>
-                <input type="file"  ref={file}/><br/>
-                <input type="submit" name="Enviar" onClick={submit} />
-                
-            </div>
+          <span>
+            lala
+          </span><br/>
+          <input name='campo' />
         </div>
-    )
-}
-export default App
+        <input name='campo2' />
+        {/* para manejar inputs del tipo file nos manejamos como cualquier otro input solo que cambiamos el titulo y el tipo fromEntries se encargara del resto */}
+        <input  type="file" name='archivo1' />
+        <input type='submit' value="Enviar"/>
+      </form>
+    );
+  }
+  
+  export default App;

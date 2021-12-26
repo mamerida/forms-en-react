@@ -25,6 +25,8 @@ function App() {
         <input name='campo' />
       </div>
       <input name='campo2' />
+      {/* para manejar inputs del tipo file nos manejamos como cualquier otro input solo que cambiamos el titulo y el tipo fromEntries se encargara del resto */}
+      <input  type="file" name='archivo1' />
       <input type='submit' value="Enviar"/>
     </form>
   );
