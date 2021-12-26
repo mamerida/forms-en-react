@@ -3,7 +3,7 @@ import { useState } from "react"
 const App = () =>{
     //para poder manejar varios inputs de manera simultanea sin necesidad de duplicar el useState paso un objeto al valor inicial con
     //los distintos nombres de los inputs para que asi en el handleChange dependiendo del nombre que lo invoco guarda uno y otro
-    const[ value, setValue ] = useState({normal: '' , texto: '',select:'' }) // para darle valores iniciales los paso aca 
+    const[ value, setValue ] = useState({normal: '' , texto: '',select:'', check: false  }) // para darle valores iniciales los paso aca 
     const handleChange = (e) =>{
 
         // con e.target.name puedo revisar el nombre del input que llama a la funcion 
@@ -11,9 +11,14 @@ const App = () =>{
         // setValue({[e.target.name]:e.target.value}) al dejarlo de esta manera se elimina la propiedad que no esta siendo completada 
         // de las siguientes dos maneras se soluciona, lo que se hace es se concatena al value anterior la modificacion pasada en el front 
         // setValue({...value,[e.target.name]:e.target.value}) 
+
+        console.log(e.target.type, e.target.checked)
+        //en caso de los checkbox no puedo colocarle el valor de value por que este no refleja el estado del checked (true o false)
+        //debo usar el target.checked para manejar el true o false 
+
         setValue((state) => ({
             ...state,
-            [e.target.name]:e.target.value
+            [e.target.name]: e.target.type  === "checkbox" ? e.target.checked : e.target.value
         }))
     }
     console.log(value)
@@ -31,7 +36,14 @@ const App = () =>{
                 <option value="chanchitofeliz">--  Chanchito Feliz -- </option>
                 <option value="chanchitotriste">-- Chanchito Triste -- </option>
                 <option value="felipe">-- Felipe -- </option>
-            </select>
+            </select><br/><br/>
+            <input 
+                type="checkbox"
+                name="check"
+                onChange={handleChange}
+                checked={value.check}
+            
+            />
         </div>
 
     )
